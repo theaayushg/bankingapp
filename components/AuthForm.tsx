@@ -20,9 +20,7 @@ import {
 import { Input } from "@/components/ui/input"
 
 const formSchema = z.object({
-    username: z.string().min(2,{
-        message: 'Username must be at least 2 characters.',
-    }),
+    email: z.string().email(),
 })
 
 const AuthForm = ({type}: {type: string}) => {
@@ -31,7 +29,7 @@ const AuthForm = ({type}: {type: string}) => {
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            username: "",
+            email: "",
         },
     })
 
@@ -75,10 +73,35 @@ const AuthForm = ({type}: {type: string}) => {
                 {/* PlaidLink */}
             </div>
             ):
-            (
-                <>
-                    FORM
-                </>
+            (<>
+            <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                    <div className="form-item">
+                        <FormLabel className="form-label">
+                            Email
+                        </FormLabel>
+                        <div className="flex w-full flex-col">
+                            <FormControl>
+                                <Input placeholder="Enter your email"
+                                className="input-class"
+                                {...field}
+                                />
+                                
+                            </FormControl>
+                            <FormMessage
+                            className="form-message mt-2" />
+                        </div>
+                    </div>
+                )}
+                />
+                <Button type="submit">Submit</Button>
+            </form>
+            </Form>
+            </>
             )
         }
 
