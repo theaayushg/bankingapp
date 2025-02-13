@@ -1,7 +1,7 @@
 import React from 'react'
-// import { z } from 'zod'
-// import { zodResolver } from '@hookform/resolvers/zod'
-// import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 
 // import { Button } from "@/components/ui/button"
 import {
@@ -12,14 +12,22 @@ import {
 //   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
+} from "./ui/form"
+import { Input } from "./ui/input"
+import { Control } from 'react-hook-form'
+import { authFormSchema } from '@/lib/utils'
 
+interface CustomInput {
+    control: Control<z.infer<typeof authFormSchema>>,
+    name: 'email' | 'password',
+    label: string,
+    placeholder: string
+}
 
-const CustomInput = ({ form, name, label, placeholder }) => {
+const CustomInput = ({ control, name, label, placeholder } : CustomInput) => {
   return (
     <FormField
-        control={form.control}
+        control={control}
         name={name}
         render={({ field }) => (
             <div className="form-item">
