@@ -1,7 +1,7 @@
 import React from 'react'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { FieldPath, useForm } from 'react-hook-form'
 
 // import { Button } from "@/components/ui/button"
 import {
@@ -19,7 +19,7 @@ import { authFormSchema } from '@/lib/utils'
 
 interface CustomInput {
     control: Control<z.infer<typeof authFormSchema>>,
-    name: 'email' | 'password',
+    name: FieldPath<z.infer<typeof authFormSchema>>,
     label: string,
     placeholder: string
 }
@@ -39,7 +39,7 @@ const CustomInput = ({ control, name, label, placeholder } : CustomInput) => {
                     <Input 
                         placeholder={placeholder}
                         className="input-class"
-                        type='password'
+                        type={name === 'password' ? 'password' : 'text'}
                         {...field}/>
                                 
                 </FormControl>
